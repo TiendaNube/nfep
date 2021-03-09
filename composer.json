@@ -1,0 +1,43 @@
+{
+    "name": "tiendanube/nfep",
+    "description": "PHP client for NFe São Paulo/SP",
+    "keywords": ["NFe", "NFePHPaulista"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Reinaldo Nolasco Sanches",
+            "email": "reinaldo@mandic.com.br",
+            "role": "Original creator"
+        },
+        {
+            "name": "Everton de Paula",
+            "email": "everton@tiendanube.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ext-dom": "*",
+        "ext-xml": "*"
+    },
+    "require-dev": {
+        "ext-soap": "*",
+        "phpunit/phpunit": "5.5.*"
+    },
+    "autoload": {
+        "psr-4": { "Tiendanube\\NFe\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": { "Tiendanube\\NFe\\Tests\\": "tests/"}
+    },
+    "bin": [],
+    "scripts": {
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "extra": {
+    }
+}
