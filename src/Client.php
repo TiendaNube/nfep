@@ -31,6 +31,8 @@ class Client
     private $urlTransfMeth_1 = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
     private $urlTransfMeth_2 = 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315';
     private $urlDigestMeth = 'http://www.w3.org/2000/09/xmldsig#sha1';
+    private $isSandbox = true;
+
     const ADDRESS_MAX_LENGHT = 50;
     const COMPLEMENT_MAX_LENGHT = 30;
     const NUMBER_MAX_LENGHT = 10;
@@ -45,6 +47,7 @@ class Client
         $this->privateKey = $this->certDir . '/nfe-privatekey.pem';
         $this->publicKey = $this->certDir . '/nfe-publickey.pem';
         $this->key = $this->certDir . '/nfe-key.pem';
+        $this->isSandbox = $configuration['production'] ?? false;
 
         if (!$this->loadCert()) {
             error_log(__METHOD__ . ': Certificate is not OK!');
@@ -325,6 +328,18 @@ class Client
      */
     public function sendRPS(NFeRPS $rps)
     {
+        if ($this->isSandbox) {
+            // This has to be unique, so use the date for testing environments
+            $rps->number = date('ymdHis');
+            return $this->sendRPSBatchTest([
+                'start' => $rps->issueDate->format('Y-m-d'),
+                'end'   => $rps->issueDate->format('Y-m-d'),
+            ], [
+                'services'   => $rps->servicesValue,
+                'deductions' => $rps->deductionsValue,
+            ], [$rps]);
+        }
+
         $operation = 'EnvioRPS';
 
         $xmlDoc = $this->createXML($operation);
@@ -345,6 +360,10 @@ class Client
      */
     public function sendRPSBatch($rangeDate, $totalValue, $rps)
     {
+        if ($this->isSandbox) {
+            return $this->sendRPSBatchTest($rangeDate, $totalValue, $rps);
+        }
+
         $operation = 'EnvioLoteRPS';
 
         $xmlDoc = $this->createXML($operation);
