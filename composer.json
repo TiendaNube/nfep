@@ -1,5 +1,5 @@
 {
-    "name": "tiendanube/nfep",
+    "name": "tiendanube/pnfe",
     "description": "PHP client for NFe São Paulo/SP",
     "keywords": ["NFe", "NFePHPaulista"],
     "type": "library",
