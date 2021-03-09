@@ -18,7 +18,7 @@ abstract class Consumer
      * Tomador CCM (not required)
      * @var string
      */
-    public $taxPayerRegister; // CCM
+    public $taxPayerRegister;
 
     /**
      * C = Corporate (CNPJ), F = Personal (CPF)
@@ -35,7 +35,7 @@ abstract class Consumer
      * R = Rua (not required)
      * @var string
      */
-    public $addressType = '';
+    public $addressType;
 
     /**
      * Address Street (required only with complete address)

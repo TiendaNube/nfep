@@ -3,6 +3,12 @@
 namespace Tiendanube\NFe;
 
 use Tiendanube\NFe\Models\RPS as NFeRPS;
+use SimpleXMLElement;
+use DOMDocument;
+use DOMElement;
+use SoapClient;
+use SoapFault;
+use DateTime;
 
 /**
  * Creates XMLs and Webservices communication
@@ -47,7 +53,7 @@ class Client
         $this->privateKey = $this->certDir . '/nfe-privatekey.pem';
         $this->publicKey = $this->certDir . '/nfe-publickey.pem';
         $this->key = $this->certDir . '/nfe-key.pem';
-        $this->isSandbox = $configuration['production'] ?? false;
+        $this->isSandbox = $configuration['sandbox'] ?? false;
 
         if (!$this->loadCert()) {
             error_log(__METHOD__ . ': Certificate is not OK!');
@@ -331,9 +337,10 @@ class Client
         if ($this->isSandbox) {
             // This has to be unique, so use the date for testing environments
             $rps->number = date('ymdHis');
+            $issueDate = DateTime::createFromFormat('U', $rps->issueDate)->format('Y-m-d');
             return $this->sendRPSBatchTest([
-                'start' => $rps->issueDate->format('Y-m-d'),
-                'end'   => $rps->issueDate->format('Y-m-d'),
+                'start' => $issueDate,
+                'end'   => $issueDate,
             ], [
                 'services'   => $rps->servicesValue,
                 'deductions' => $rps->deductionsValue,

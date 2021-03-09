@@ -10,6 +10,19 @@ use DateTime;
  */
 abstract class RPS
 {
+    const NO_TAX = 'I';
+    const ISS_SUSPENDED = 'J';
+    const TAX_IN_SP_CITY = 'T';
+    const TAX_OUTSIDE_SP_CITY = 'F';
+
+    const TYPE_RPS = 'RPS';
+    const TYPE_RPS_M = 'RPS-M';
+    const TYPE_RPS_C = 'RPS-C';
+
+    const NORMAL_STATUS = 'N';
+    const CANCELLED_STATUS = 'C';
+    const MISPLACED_STATUS = 'M';
+
     /**
      * Provider CCM
      * Taxpayer Register (for service providers who pay ISS for local town/city hall)
@@ -30,8 +43,8 @@ abstract class RPS
     public $number;
 
     /**
-     * RPS ­  Provisional Service Receipt
-     * RPS-M ­Provisional Service Receipt from Conjugated Invoice (Mixed)
+     * RPS   Provisional Service Receipt
+     * RPS-M Provisional Service Receipt from Conjugated Invoice (Mixed)
      * RPS-C Cupom
      * @var string
      */
@@ -43,9 +56,9 @@ abstract class RPS
     public $issueDate;
 
     /**
-     * N ­ Normal
-     * C ­ Canceled
-     * E ­ Misplaced
+     * N - Normal
+     * C - Canceled
+     * E - Misplaced
      * @var string
      */
     public $status = 'N';
@@ -53,13 +66,13 @@ abstract class RPS
     /**
      * T - Taxation in the municipality of São Paulo
      * F - Taxation outside the municipality of São Paulo
-     * I ­- Free (No need to pay tax)
+     * I - Free (No need to pay tax)
      * J - ISS Suspended by Judicial Decision
      */
     public $taxation = 'I';
 
     /**
-     * Value ​​for the service provided
+     * Value for the service provided
      * @var float
      */
     public $servicesValue = 0;
